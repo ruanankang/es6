@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Set</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  const colors = new Set();
+  /*
+  	add：添加元素，不可以重复；
+  	delete：删除元素，返回布尔值；
+  	size：set集合的大小；
+  	has：判断集合中是否含某元素，返回布尔值；
+  	clear：清空集合；
+  	values：返回集合的迭代器；
+  	for of 可以遍历set集合；
+  	forEach 可以遍历set集合；
+   */
+  colors.add('red');
+  colors.add('blue');
+  colors.add('5');
+  colors.add(5);
+  colors.delete('blue');
+  colors.has('5');
+  colors.size;
+  // colors.clear();
+  const setIterator = colors.values();
+  setIterator.next();
+
+  for (let value of colors) {
+    console.log(value);
+  }
+
+  colors.forEach((item, index, set) => {
+    console.log(item, index, set)
+  })
+
+  const fruits = new Set(['apple', 'banana', 'mongo']);
+
+  // 数组去重
+  const numArr = [1, 2, 2, 3, 4, 5, 5, 5];
+  const numSet = new Set(numArr); // {1,2,3,4,5}
+  const numArr2 = [...numSet]; // [1,2,3,4,5]
+
+
+ // Weak Set
+ let jelly = {name: 'jelly', age: 17};
+ let mary = {name: 'mary', age: 18};
+
+ const weakPeople = new WeakSet([jelly, mary]);
+ mary = null;
+ console.log(weakPeople);
+  </script>
+</body>
+
+</html>

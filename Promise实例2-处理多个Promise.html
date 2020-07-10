@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Promise实例2-处理多个Promise</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  const usersPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(['mojombo', 'vanpelt', 'wycats']);
+    }, 2000);
+  });
+
+  const moviePromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({ name: '摔跤吧！爸爸', rating: 9.2, year: 2016 });
+    }, 500);
+  });
+
+  // all方法：只有当传入的所有 Promise 对象都是执行 resolve 方法时，才会执行 all 后面的 then，否则执行 catch
+  Promise
+    .all([usersPromise, moviePromise])
+    .then(res => {
+      // res是一个数组，每个元素是传入all里面的promise对象的返回值
+      const [users, movie] = res;
+      console.log(users);
+      console.log(movie);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+
+  // race方法：Promse.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
+  Promise
+    .race([usersPromise, moviePromise])
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+  </script>
+</body>
+
+</html>

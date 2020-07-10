@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>实现迭代器</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  Array.prototype.values = function() {
+    let i = 0;
+    let items = this;
+    return {
+      next() {
+        const done = i >= items.length;
+        const value = done ? undefined : items[i++];
+        return {
+          value,
+          done
+        }
+      }
+    }
+  }
+
+  const colors = ['red', 'blue'];
+
+  const iterator = colors.values();
+  iterator.next(); //{value: "red", done: false}
+  iterator.next(); //{value: "blue", done: true}
+  iterator.next(); //{value: undefined, done: true}
+  </script>
+</body>
+
+</html>

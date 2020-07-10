@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖节流</title>
+  <style>
+    body {
+      height: 2000px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button>点我防抖</button>
+
+  <script>
+    /**
+     * 防抖：一定时间范围内，只执行最后一个触发事件
+     * 定时器实现
+     * 应用场景：限制鼠标连击触发，input搜索建议
+     */
+    function debounce(fn, delay = 200, ...args) {
+      let timeout = null;
+      return function() {
+        if (timeout !== null) {
+          clearTimeout(timeout)
+        }
+        timeout = setTimeout(fn.bind(this, ...args), delay);
+      }
+    }
+
+    // 处理函数
+    function handle(num) {
+      console.log(num + Math.random())
+    }
+
+    // 点击按钮事件
+    const button = document.querySelector('button');
+    button.addEventListener('click', debounce(handle, 1000, 2));
+
+
+    /**
+     * 节流：一定时间范围内，只执行第一个触发事件
+     * 时间戳实现
+     * 应用场景：滚动刷新数据
+     */
+    function throttle(fn, delay, ...args) {
+      let prevTimestamp = new Date();
+      return function() {
+        const currentTimestamp = new Date();
+        if (currentTimestamp - prevTimestamp > delay) {
+          fn.call(this, ...args);
+          prevTimestamp = new Date();
+        }
+      }
+    }
+
+    function handle2(num) {
+      console.log(num + Math.random())
+    }
+
+    window.addEventListener('scroll', throttle(handle2, 1000, 2))
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Symbol</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  // 创建一个 Symbol 类型的值: Symbol()
+  const peter = Symbol();
+
+  const classRoom = {
+    [Symbol('lily')]: { grade: 60, gender: 'female' },
+    [Symbol('bobe')]: { grade: 80, gender: 'male' },
+    [Symbol('nina')]: { grade: 90, gender: 'female' },
+  }
+
+  for (let key in classRoom) {
+    console.log(key); //无
+  }
+
+  // 遍历属性名，返回数组
+  const syms = Object.getOwnPropertySymbols(classRoom);
+  console.log(syms);
+
+  // 通过属性名，获取 Symbol 类型的属性的属性值，只能通过 对象[属性名] 的方式访问，不能通过 对象.属性名 方式访问
+  syms.map(item => {
+    console.log(classRoom[item]);
+  })
+
+  </script>
+</body>
+
+</html>

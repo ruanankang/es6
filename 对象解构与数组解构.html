@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>对象解构与数组解构</title>
+</head>
+
+<body>
+  <div class="container"></div>
+  <script>
+  const Tom = {
+    name: 'Tom Jones',
+    age: 25,
+    family: {
+      mother: 'Norah Jones',
+      father: 'Richard Jones',
+      brother: 'Howard Jones'
+    }
+  }
+
+  //1、 对象解构
+  const { name, age } = Tom;
+
+  //2、 解构之前已有变量名被使用，那么在解构的时候需要用括号包住
+  let name = 'Bob';
+  ({ name, age } = Tom);
+  console.log(name);
+
+  //3、 对象解构可以嵌套
+  const { mother, father } = Tom.family;
+
+  //4、 对象解构重命名
+  const { mother, father, brother: b } = Tom.family;
+
+  //5、 如果对象没有该属性或者该属性的值为undefined时，可以初始化赋值（回滚值），但是并不会给原来对象增加该属性
+  const { mother, father, brother: b, sister = 'Alice' } = Tom.family;
+  console.log(sister);
+
+  /**
+   * 对象解构的应用
+   */
+  function appendChildDiv(options = {}) {
+    const { parent = 'body', width = '100px', height = '80px', backgroundColor = 'pink' } = options;
+    const div = document.createElement('div');
+    div.style.width = width;
+    div.style.height = height;
+    div.style.backgroundColor = backgroundColor;
+
+    document.querySelector(parent)
+      .appendChild(div);
+  }
+
+  appendChildDiv({
+    parent: '.container',
+    width: '200px',
+    height: '100px'
+  })
+
+  //-----------------------------------------------------
+
+  const numbers = [1, 2, 3];
+
+  // 1、数组解构获取对应索引位置的值，声明关键字const let可以不加，如果不加默认为let
+  const [num1, num2] = numbers;
+
+  // 2、如果该索引位置的值不需要，就用逗号保留
+  const [num1, , num3] = numbers;
+
+  // 3、如果想获取后面所有元素，则使用剩余参数的方式获取，得到数组
+  const [num1, ...nums] = numbers; //num1 = 1, nums = [2, 3]
+
+  // 4、当某个索引值为undefined时，可以设置默认参数
+  const [num1, , num3, num4 = 4] = numbers;
+
+  /**
+   * 数组解构的应用  交换a, b两个值
+   */
+  let a = 10;
+  let b = 20;
+  [a, b] = [b, a];
+
+  </script>
+</body>
+
+</html>

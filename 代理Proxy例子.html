@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>代理Proxy例子</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  // 电话号码
+  const phoneHandler = {
+    set(target, key, value) {
+      target[key] = value.match(/[0-9]/g)
+        .join(''); // 设置phoneNumber的每个属性只能是数字组成
+    },
+    get(target, key) {
+      return target[key].replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    }
+  };
+  const phoneNumber = new Proxy({}, phoneHandler);
+
+  // 处理不同用户输入的对象，属性不区分大小写
+  const safetyHandler = {
+    set(target, key, value) {
+      const likeKey = Object.keys(target).find(item => item.toUpperCase() === key.toUpperCase());
+      if (!(key in target) && likeKey) {
+      	throw new Error(`${key} 属性不存在该对象中，但是有 ${key} 不区分大小写的属性 ${likeKey}`)
+      }
+
+      target[key] = value;
+    }
+  };
+  const safetyProxy = new Proxy({ id: 2 }, safetyHandler);
+
+  safetyProxy.ID = 5; // 报错
+  </script>
+</body>
+
+</html>

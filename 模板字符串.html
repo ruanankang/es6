@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>模板字符串</title>
+</head>
+
+<body>
+  <input style="width=300; height=200" />
+  <script type="text/javascript">
+  function highlight(string, ...values) {
+    console.log(arguments);
+    console.log(string, values);
+    debugger;
+    return 'laravist';
+  }
+
+  const user = 'Mary';
+  const topic = 'Learn to use markdown';
+  // （标签模板字符串）函数名+模板字符串 等价于 将模板字符串中的所有字符串整合成数组后，作为第一个参数传递给函数，其余变量作为其他参数，依次传入函数中
+  // 以变量开头和结尾的标签模板字符串会多出空字符串
+  const sentence = highlight `${user} has commented on your topic ${topic}`;
+
+  console.log(sentence);
+
+  </script>
+</body>
+
+</html>

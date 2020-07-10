@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>生成器Generator</title>
+  <script src="https://cdn.bootcss.com/axios/0.19.2/axios.min.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+  function* listColors() {
+    yield 'red';
+    yield 'blue';
+  }
+
+  const colors = listColors();
+  colors.next(); // {value: "red", done: false}
+  colors.next(); // {value: "blue", done: false}
+  colors.next(); // {value: undefined, done: true}
+
+  /*
+  	案例：生成器控制 ajax 工作流
+   */
+  // 方法一：利用Promise
+  /*let username;
+  const usersPromise = axios.get('https://api.github.com/users');
+  usersPromise
+    .then(response => {
+      username = response.data[0].login;
+      return axios.get(`https://api.github.com/users/${username}/repos`);
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(err => {
+      console.err(err);
+    })*/
+  // 方法二：利用Generator
+  function myAjax(url) {
+    axios
+      .get(url)
+      .then(res => userGen.next(res.data)) // 向next()方法传入参数
+  }
+
+  function* steps() {
+    console.log("fetching users");
+    const users = yield myAjax(`https://api.github.com/users`);
+    console.log('users: ', users);
+
+    console.log("fetching firstUser");
+    const firstUser = yield myAjax(`https://api.github.com/users/${users[0].login}`);
+    console.log('firstUser: ', firstUser);
+
+    console.log("fetching followers");
+    const followers = yield myAjax(firstUser.followers_url);
+    console.log('followers', followers);
+  }
+
+  const userGen = steps(); // 返回生成器的迭代器
+  userGen.next(); // 开启生成器
+  </script>
+</body>
+
+</html>

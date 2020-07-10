@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>systemJS</title>
+</head>
+
+<body>
+  <h1>System JS</h1>
+  <script src="https://dev.jspm.io/system@0.19.js"></script>
+  <script type="text/javascript">
+  System.config({ transpiler: 'babel' });
+  System.import('./main.js');
+  </script>
+</body>

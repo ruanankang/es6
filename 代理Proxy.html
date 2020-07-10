@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>代理Proxy</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  const person = { name: 'Bob', age: 17 };
+  const personProxy = new Proxy(person, {
+    get(target, key) {
+      return target[key].toUpperCase(); // 姓名大写
+    },
+    set(target, key, value) {
+      if (typeof value === 'string') {
+        target[key] = value.trim(); // 姓名去首尾空格
+      }
+    }
+  })
+
+  personProxy.name = '  alice'; // 前面有两个空格
+
+  console.log(personProxy); // {name: "alice", age: 17}
+  console.log(person); // {name: "alice", age: 17}
+  console.log(person.name); // "alice"
+  console.log(personProxy.name); // "ALICE"
+  </script>
+</body>
+
+</html>

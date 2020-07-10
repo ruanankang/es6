@@ -1,0 +1,96 @@
+y<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Promise实例1</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  const repos = [{
+      name: 'grit',
+      owner: 'mojombo',
+      description: 'Grit is no longer maintained',
+      id: 1
+    },
+    {
+      name: 'jsawesome',
+      owner: 'vanpelt',
+      description: 'Awesome JSON',
+      id: 2
+    }, {
+      name: 'merb-core',
+      owner: 'wycats',
+      description: 'Merb Core: All you need. None you don\'t',
+      id: 3
+    }
+  ];
+
+  const owners = [{
+      name: 'mojombo',
+      location: 'San Francisco',
+      followers: 123
+    },
+    {
+      name: 'vanpelt',
+      location: 'Bay Minette',
+      followers: 1034
+    },
+    {
+      name: 'wycats',
+      location: 'Los Angeles, CA',
+      followers: 388
+    }
+  ]
+
+  // 根据id查找repo，返回一个 Promise 对象
+  function getReposById(id) {
+    return new Promise((resolve, reject) => {
+      const repo = repos.find(item => item.id === id);
+      if (repo) {
+        resolve(repo);
+      } else {
+        reject(Error('No repo fond.'))
+      }
+    });
+  }
+
+  const ret = getReposById(1);
+  console.log(ret);
+
+
+  getReposById(1)
+    .then(repo => {
+      console.log(repo);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+
+  // 根据repo查找owner，返回一个 Promise 对象
+  function comboundOwner(repo) {
+    return new Promise((resolve, reject) => {
+      const owner = owners.find(item => item.name === repo.owner);
+      if (owner) {
+        resolve(owner);
+      } else {
+        reject(Error('Can not find the owner.'))
+      }
+    })
+  }
+
+  getReposById(1)
+    .then(repo => {
+      return comboundOwner(repo);
+    })
+    .then(owner => {
+      console.log(owner);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+  </script>
+</body>
+
+</html>

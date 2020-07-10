@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Arrow Function</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  const numbers = [1, 2, 5, 1, 6];
+
+  const double = numbers.map((item) => {
+    return item * 2;
+  })
+
+  const double2 = numbers.map(item => {
+    return item * 2;
+  })
+
+  const double3 = numbers.map((item, index) => {
+    return item * 2;
+  })
+
+  const double4 = numbers.map(item => item * 2)
+
+  const double5 = numbers.map(() => {
+    return 1;
+  })
+
+  // const Jelly = {
+  // 	name: 'Jelly',
+  // 	hobbies: ['coding', 'Sleeping', 'Reading'],
+  // 	printHobbies: function() {
+  // 	console.log(this); //指向Jelly对象
+  // 		this.hobbies.map(function(elem, index) {
+  // 		console.log(this) //指向window
+  // 			console.log(`${this.name} loves ${elem}`) //报错，this指向为window
+  // 		})
+  // 	}
+  // }
+
+  const Jelly = {
+    name: 'Jelly',
+    hobbies: ['coding', 'Sleeping', 'Reading'],
+    printHobbies: function() {
+      console.log(this); //指向Jelly对象
+      this.hobbies.map((elem) => {
+        console.log(this); //指向父级作用域Jelly对象
+        console.log(`${this.name} loves ${elem}`) //正常打印，箭头函数不改变this指向
+      })
+    }
+  }
+
+  Jelly.printHobbies()
+
+  function multiply(a = 3, b = 4) {
+    return a * b
+  }
+
+
+  /**
+   * 箭头函数不适合的场合
+   */
+
+  // 1、作为构造函数，一个方法需要绑定到对象
+  // const Person = (name, age) => {
+  //     this.name = name;
+  //     this.age = age;
+  // } //报错
+  const Person = function(name, age) {
+    this.name = name;
+    this.age = age;
+  } //正常
+  const Bob = new Person('Bob', 5);
+  // Person.prototype.updateAge = () => {
+  //     this.age++;
+  //     console.log(this.age)
+  // } //此时this是指向window，而不是Person
+  Person.prototype.updateAge = function() {
+    this.age++;
+    console.log(this.age)
+  }
+  Bob.updateAge();
+
+  // 2、当你真的需要this的时候
+  const button = document.querySelector('.zoom');
+  button.addEventListener('click', () => {
+    console.log(this); //指向父级作用域window
+    this.classList.add('in');
+    setTimeout(() => {
+      this.classList.remove('in');
+    }, 2000)
+  }) //此时的箭头函数的this指向父级作用域window
+  button.addEventListener('click', function() {
+    console.log(this); //指向button对象
+    this.classList.add('in');
+    setTimeout(() => {
+      console.log(this); //指向父级作用域button对象
+      this.classList.remove('in');
+    }, 2000)
+  }) //此时的箭头函数的this指向父级作用域window
+
+  // 3、需要使用arguments对象
+  const sum = function() {
+    return Array.from(arguments)
+      .reduce((prevSum, value) => prevSum + value, 0)
+  }
+  </script>
+</body>
+
+</html>

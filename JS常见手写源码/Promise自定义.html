@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Promise自定义</title>
+	</head>
+	<body>
+		<script src="./lib/Promise.js"></script>
+		<script>
+			new Promise((resolve, reject) => {
+				setTimeout(() => {
+					// resolve(1);
+					reject(1);
+				});
+			})
+				.then((value) => {
+					console.log(value);
+				})
+				.catch((e) => {
+					console.log("error", e);
+				});
+
+			Promise.resolve(Promise.reject(4)).catch((e) => {
+				console.log(e);
+			});
+		</script>
+	</body>
+</html>

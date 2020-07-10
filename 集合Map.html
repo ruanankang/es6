@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>集合Map</title>
+</head>
+
+<body>
+  <button>Fire</button>
+  <button>Dancer</button>
+  <button>Ice Cream</button>
+  <button>Hamburger</button>
+  <button>Fish</button>
+  <script type="text/javascript">
+  const people = new Map();
+
+  /*
+  	set：添加map元素
+  	get：传入键名，返回对应的键值
+  	size： 获取键值对的数量
+  	has：判断某个键是否在map中
+  	clear：清空
+   */
+  people.set('jelly', 23);
+  people.set('mary', 24);
+  people.set('jelly', 25); // 添加失败，元素的键不可以重复
+
+  people.forEach((value, key, map) => {
+    console.log(value, key, map)
+  })
+
+  for (let person of people) {
+    console.log(person);
+  }
+
+  for (let [key, value] of people) {
+    console.log([key, value]);
+  }
+
+  const fruits = new Map([
+    ['apple', 6],
+    ['banana', 5]
+  ]);
+
+
+  // 案例：记录button点击次数
+  const clickCounts = new Map();
+  const buttons = document.querySelectorAll('button');
+
+  buttons.forEach(button => {
+    clickCounts.set(button, 0);
+    button.addEventListener('click', function() {
+      let val = clickCounts.get(this);
+      clickCounts.set(this, ++val);
+      console.log(clickCounts);
+    })
+  })
+  </script>
+</body>
+
+</html>

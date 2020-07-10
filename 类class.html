@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>类class</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  // 类的声明
+  class User {
+    // 类的构造函数
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+
+    // 实例方法
+    info() {
+      console.log('hello world');
+    }
+
+    // 静态方法
+    static userDesc() {
+      console.log('userDesc hello');
+    }
+
+    // 定义属性的set方法
+    set github(value) {
+      this.githubName = value;
+    }
+
+    // 定义属性的get方法
+    get github() {
+      return this.githubName;
+    }
+
+  };
+
+  const alice = new User('Alice', 18);
+
+  // 类的表达式
+  /*const Emplyee = class {
+  	// 类的构造函数
+    constructor(name, age) {
+    	this.name = name;
+    	this.age = age;
+    }
+
+    // 实例方法
+    info() {
+    	console.log('hello world');
+    }
+  };*/
+
+
+  // 类的继承
+  class Animal {
+    constructor(name) {
+      this.name = name;
+      this.belly = [];
+    }
+
+    eat(food) {
+      this.belly.push(food);
+    }
+  }
+
+  class Dog extends Animal {
+    constructor(name, age) {
+    	super(name);
+    	this.age = age;
+    }
+
+    bark() {
+    	console.log("wang wang")
+    }
+  }
+
+  // ES5中实现继承
+/*  function Animal(name) {
+  	this.name = name;
+    this.belly = [];
+    this.eat = function(food) {
+    	this.belly.push(food);
+    }
+  }
+  function Dog(name, age) {
+  	Animal.call(this, name, age);
+  	this.name = name;
+  	this.age = age;
+  }
+  Dog.prototype = new Animal();
+  Dog.prototype.constructor = Dog();*/
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>扩展类建对象数组</title>
+  <style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: '苹方';
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 500px;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  button {
+    width: 60px;
+    height: 30px;
+    margin-left: 20px;
+    color: white;
+    font-weight: 700;
+    background-color: #5B94F9;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  ul {
+    list-style: none;
+    width: 150px;
+  }
+
+  li {
+    margin-top: 10px;
+    text-align: center;
+    transition: all 0.5s;
+  }
+
+  li:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="title">
+    <h3>电影排名</h3> <button>排序</button>
+  </div>
+  <ul></ul>
+  <script type="text/javascript">
+  // ES5实现创建‘数组’
+  /*function MyArray() {
+  	Array.call(this, arguments);
+  }
+  const colors = new MyArray();*/
+
+  // 类建对象数组
+  // class MyArray extends Array {
+  // 	constructor() {
+  // 		super();
+  // 	}
+  // }
+
+  // const arr = new MyArray();
+
+  // 案例
+  class movieCollection extends Array {
+    constructor(name, ...items) {
+      super(...items);
+      this.name = name;
+    }
+
+    add(movie) {
+      this.push(movie);
+    }
+
+    topRanked(limit = 3) {
+      return [...this].sort((a, b) => (a.scores > b.scores) ? -1 : 1)
+        .slice(0, limit);
+    }
+  }
+
+  const movies = new movieCollection('favorite movies', { name: 'The God', scores: 8.7 }, { name: 'The Shadow', scores: 9.6 }, { name: 'The Days', scores: 8.0 }, { name: 'The Blue', scores: 9.3 })
+
+  movies.add({ name: 'Spring', scores: 7.6 });
+
+  let ulNode = document.querySelector('ul');
+  movies.forEach((movie, index) => {
+    ulNode.innerHTML = `${ulNode.innerHTML}<li>${movie.name} <a>${movie.scores}</a></li>`;
+  })
+
+  const button = document.querySelector('button');
+  let flag = true;
+  button.onclick = function(e) {
+    if (flag) {
+      const rankedMovies = movies.topRanked();
+      ulNode.innerHTML = '';
+      rankedMovies.forEach((movie, index) => {
+        ulNode.innerHTML = `${ulNode.innerHTML}<li>${movie.name} <a>${movie.scores}</a></li>`;
+      });
+      flag = false;
+    } else {
+      ulNode.innerHTML = '';
+      movies.forEach((movie, index) => {
+        ulNode.innerHTML = `${ulNode.innerHTML}<li>${movie.name} <a>${movie.scores}</a></li>`;
+      });
+      flag = true;
+    }
+  }
+  </script>
+</body>
+
+</html>

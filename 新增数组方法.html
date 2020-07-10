@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>新增数组方法</title>
+</head>
+
+<body>
+  <ul>
+    <li>Go to Cinema</li>
+    <li>Watch TV</li>
+    <li>Go Shopping</li>
+  </ul>
+  <script>
+  function Person(name) {
+    this.name = name;
+  }
+  const p = new Person('Bob');
+  // 静态方法
+  Person.say2 = function() {
+    console.log(2222222222)
+  }
+  // 实例方法
+  Person.prototype.say = () => {
+    console.log(11111111)
+  }
+
+  /**
+   * Array.from()
+   */
+  // nodelist是类数组   Array.from()可以将类数组转换成数组
+  const todos = document.querySelectorAll('li');
+  // const names = Array.from(todos).map(todo => todo.textContent);
+  const names = Array.from(todos, todo => todo.textContent);
+  console.log(names);
+
+  const arrLike = { 0: 'foo', 1: 'bar', 2: 'baz', length: 3 };
+  // bad
+  const arr1 = Array.prototype.slice.call(arrLike);
+  // good
+  const arr2 = Array.from(arrLike);
+  console.log(arr1)
+  console.log(arr2)
+
+  /**
+   * Array.of()
+   */
+  const arr = Array.of(1, 2, 3);
+
+  /**
+   * .find((element, index, array) => {}) 返回element
+   */
+  const inventory = [
+    { name: 'apples', quantity: 2 },
+    { name: 'bananas', quantity: 0 },
+    { name: 'cherries', quantity: 5 }
+  ]
+  // const bananas = inventory.find((fruit, index, inventory) => {
+  //  console.log(fruit)
+  //  if (fruit.name === 'bananas') {
+  //    return true;
+  //  }
+  //  return false;
+  // })
+  const bananas = inventory.find(fruit => fruit.name === 'bananas');
+  console.log(bananas)
+
+  /**
+   * .findIndex((element, index, array) => {}) 返回index
+   */
+
+  /**
+   * .some((element, index, array) => {}) 当遇到第一个return true时，结束循环，返回true，否则返回false
+   */
+
+  /**
+   * .every((element, index, array) => {}) 当遇到第一个return false时，结束循环，返回false，否则返回true
+   */
+  </script>
+</body>
+
+</html>

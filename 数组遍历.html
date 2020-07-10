@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>数组遍历</title>
+</head>
+
+<body>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <script>
+  const fruits = ['apple', 'banana', 'pear', 'mango'];
+
+  //四种遍历方式 for forEach for-in for-of
+  for (let i = 0; i < fruits.length; i++) {
+    console.log(fruits[i])
+  }
+
+  fruits.forEach(fruit => {
+    if (fruit === 'pear') {
+      return; //相当于continue 只会结束当前循环体的语句，后续继续迭代
+    }
+    console.log(fruit);
+  })
+
+  for (let key in fruits) {
+    console.log(fruits[key])
+  }
+
+  for (let fruit of fruits) {
+    if (fruit === 'pear') {
+      break; //结束当前循环以及后续的循环内容
+    }
+    console.log(fruit)
+  }
+
+  /**
+   * for-of的应用  可用于数组、字符串、map、set、arguments、nodelist、Iterator等数据结构
+   * Array.prototype.entries() 返回数组的迭代器 Array Iterator
+   */
+  for (let fruit of fruits.entries()) {
+    console.log(fruit);
+  }
+  for (let [index, fruit] of fruits.entries()) {
+    console.log(fruit);
+  }
+
+  for (let char of 'Alice') {
+    console.log(char);
+  }
+
+  const lis = document.querySelectorAll('li');
+  for (let li of lis) {
+  	console.log(li);
+  }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Promise</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+	
+  <script>
+
+  // let user;
+
+  // fetch all users
+  // $.get('https://api.github.com/users', data => {
+  //   console.log(data);
+  //   user = data[0].login;
+  // })
+
+  // fetch the first user's repos
+  // $.get(`https://api.github.com/users/${user}/repos`, data => {
+  // 	console.log(data);
+  // })
+
+
+  /**
+   * 创建 Promise
+   * reslove 指成功后的回调函数，在then中返回
+   * reject 指失败后的回调函数，在catch中返回
+   */
+  const p = new Promise((reslove, reject) => {
+    // reslove('Bob is success');
+    reject(Error('Alice is fatal'));
+  })
+
+  p.then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  </script>
+</body>
+
+</html>
